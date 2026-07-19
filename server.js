@@ -108,7 +108,13 @@ app.get('/api/randomorg', async (req, res) => {
     res.status(500).json({ error: 'Semua sumber gagal' });
 });
 
-const PORT = process.env.PORT || 3000;
-httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log(`Dadu Pro server: http://localhost:${PORT}`);
-});
+// Export for Vercel serverless
+module.exports = app;
+
+// Local dev
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    httpServer.listen(PORT, '0.0.0.0', () => {
+        console.log(`Dadu Pro server: http://localhost:${PORT}`);
+    });
+}
