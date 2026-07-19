@@ -1,8 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
-const { MongoClient } = require('mongodb');
+const uuidv4 = () => require('crypto').randomUUID();
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'dadupro_secret_fallback_key';
