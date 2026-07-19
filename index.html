@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Dadu Pro — AI Prediksi Dadu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Ambient Background -->
+    <div class="ambient">
+        <div class="ambient-orb ab-1"></div>
+        <div class="ambient-orb ab-2"></div>
+        <div class="ambient-orb ab-3"></div>
+    </div>
+    <canvas id="particles"></canvas>
+
+    <!-- ═══════ TOP BAR ═══════ -->
+    <nav class="topbar" data-stagger="0">
+        <a href="landing.html" class="tb-back">← Landing</a>
+        <div class="tb-logo">
+            <span class="tb-dice">🎲</span>
+            <span class="tb-name">Dadu<span>Pro</span></span>
+        </div>
+        <div class="tb-right">
+            <span class="tb-badge green" id="crypto-status"><i class="tb-dot"></i>CSPRNG</span>
+            <span class="tb-badge mono" id="entropy-counter">0b</span>
+            <span id="user-badge"><span class="tb-badge green clickable" onclick="showSubscriptionModal()">Masuk</span></span>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- ═══════ AI PREDICTION ═══════ -->
+        <section class="section-ai" data-stagger="1">
+            <div class="ai-aura"></div>
+            <div class="ai-top">
+                <span class="label-tag"><i class="ldot"></i> AI PREDICT</span>
+                <span class="ai-status" id="ai-status">Menunggu data...</span>
+            </div>
+            <div class="ai-display" id="ai-pred">
+                <div class="ai-idle">
+                    <span class="ai-idle-emoji">🧠</span>
+                    <span class="ai-idle-text">Lempar dadu untuk prediksi</span>
+                </div>
+            </div>
+            <div class="ai-meta" id="ai-meta" style="display:none">
+                <div class="ai-conf">
+                    <span class="ai-conf-label">Keyakinan</span>
+                    <div class="ai-conf-track">
+                        <div class="ai-conf-fill" id="conf-bar"></div>
+                        <div class="ai-conf-glow"></div>
+                    </div>
+                    <span class="ai-conf-val" id="conf-pct">0%</span>
+                </div>
+                <div class="ai-reason" id="ai-reason"></div>
+            </div>
+        </section>
+
+        <!-- ═══════ DICE ARENA ═══════ -->
+        <section class="section-dice" data-stagger="2">
+            <div class="dice-chrome">
+                <div class="dice-chrome-inner">
+                    <div class="dice-grid" id="dice-grid"></div>
+                </div>
+                <div class="dice-chrome-glow"></div>
+            </div>
+            <div class="dice-controls">
+                <button class="dctrl speed-btn active" data-speed="normal" id="speed-normal">Normal</button>
+                <button class="dctrl speed-btn" data-speed="fast" id="speed-fast">Cepat</button>
+                <button class="dctrl speed-btn" data-speed="auto" id="speed-auto">Auto</button>
+                <button class="dctrl" id="paste-dice-btn" title="Paste angka dadu">📋 Paste</button>
+            </div>
+            <div class="paste-input-wrap" id="paste-input-wrap" style="display:none">
+                <input type="text" class="paste-input" id="paste-input" placeholder="4,5,6,3,2,1,5,4,3">
+                <button class="dctrl active" id="paste-go-btn">✅</button>
+            </div>
+        </section>
+
+        <!-- ═══════ RESULT ═══════ -->
+        <section class="section-result" id="result-card" data-stagger="3">
+            <div class="result-idle" id="result-placeholder">
+                <span class="result-idle-icon">🎯</span>
+                Tekan <b>Lempar</b> untuk mulai
+            </div>
+            <div class="result-show hidden" id="result-content">
+                <div class="res-left">
+                    <div class="res-tag">TOTAL</div>
+                    <div class="res-num" id="res-total">—</div>
+                    <div class="res-range" id="res-range"></div>
+                </div>
+                <div class="res-right">
+                    <div class="res-badge" id="res-badge">—</div>
+                    <div class="res-streak" id="res-streak"></div>
+                    <div class="winlose-btns" id="winlose-btns" style="display:none">
+                        <button class="wl-btn wl-win" onclick="markWinLose('win')">✅ Win</button>
+                        <button class="wl-btn wl-lose" onclick="markWinLose('lose')">❌ Lose</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ ACTIONS ═══════ -->
+        <div class="actions" data-stagger="4">
+            <button id="btn-roll" class="roll-btn" type="button">
+                <span class="roll-btn-shine"></span>
+                <span class="roll-btn-text">🎲 Lempar Dadu</span>
+            </button>
+            <button id="btn-add-roll" class="icon-btn" type="button" title="Tambah Roll Manual dari Google Dice">➕</button>
+            <button id="btn-sound" class="icon-btn on" type="button" title="Toggle Suara">🔊</button>
+            <button id="btn-reset" class="icon-btn danger" type="button" title="Reset">🗑</button>
+        </div>
+
+        <!-- ADD ROLL INPUT -->
+        <div class="addroll" id="add-roll-wrap" style="display:none">
+            <div class="addroll-pred" id="add-roll-pred"></div>
+            <div class="addroll-row">
+                <input type="text" class="paste-input" id="add-roll-input" placeholder="Total dari Google Dice (contoh: 32)">
+                <button class="dctrl active" id="add-roll-go">✅ OK</button>
+            </div>
+            <div class="addroll-hint">Masukkan total angka dari Google Dice lalu pilih Win/Lose</div>
+        </div>
+
+        <!-- ═══════ STATS STRIP ═══════ -->
+        <div class="stats-strip" data-stagger="5">
+            <div class="sbox sbox-cyan">
+                <span class="sbox-n" id="s-total">0</span>
+                <span class="sbox-l">Total</span>
+            </div>
+            <div class="sbox sbox-green">
+                <span class="sbox-n" id="s-win" onclick="editStat('win')" style="cursor:pointer" title="Klik untuk edit">0</span>
+                <span class="sbox-l">Win</span>
+            </div>
+            <div class="sbox sbox-red">
+                <span class="sbox-n" id="s-lose" onclick="editStat('lose')" style="cursor:pointer" title="Klik untuk edit">0</span>
+                <span class="sbox-l">Lose</span>
+            </div>
+            <div class="sbox sbox-gold">
+                <span class="sbox-n" id="s-streak">0x</span>
+                <span class="sbox-l">Streak</span>
+            </div>
+        </div>
+
+        <!-- ═══════ DISTRIBUTION ═══════ -->
+        <section class="section-prob" data-stagger="6">
+            <span class="label-tag"><i class="ldot"></i> DISTRIBUSI</span>
+            <div class="prob-layout">
+                <div class="prob-col prob-left">
+                    <div class="prob-big kecil-c" id="p-kecil">50.5%</div>
+                    <div class="prob-name">Kecil <span>9–31</span></div>
+                </div>
+                <div class="prob-mid">
+                    <div class="prob-vbar">
+                        <div class="prob-vfill-k" id="pf-kecil" style="height:50.5%"></div>
+                        <div class="prob-vfill-b" id="pf-besar" style="height:49.5%"></div>
+                    </div>
+                </div>
+                <div class="prob-col prob-right">
+                    <div class="prob-big besar-c" id="p-besar">49.5%</div>
+                    <div class="prob-name">Besar <span>32–54</span></div>
+                </div>
+            </div>
+            <div class="prob-hbar">
+                <div class="prob-hfill-k" id="pbh-k"></div>
+                <div class="prob-hfill-b" id="pbh-b"></div>
+            </div>
+            <p class="prob-note">Teoritis: 50.5% / 49.5% · Empiris dari <b id="throw-count">0</b> lemparan</p>
+        </section>
+
+        <!-- ═══════ HISTORY ═══════ -->
+        <section class="section-hist" data-stagger="7">
+            <div class="hist-head">
+                <span class="label-tag"><i class="ldot"></i> RIWAYAT</span>
+                <span class="hist-count" id="hl-count">0 lemparan</span>
+            </div>
+            <ul id="history-list">
+                <li class="hist-empty">Belum ada lemparan</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ═══════ AUTH MODAL ═══════ -->
+    <div class="modal-bg" id="auth-modal" style="display:none">
+        <div class="modal-box">
+            <div class="modal-top">
+                <span class="modal-h">Masuk / Daftar</span>
+                <button class="modal-x" id="auth-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="login">Masuk</button>
+                    <button class="modal-tab" data-tab="register">Daftar</button>
+                </div>
+                <div id="auth-login-form">
+                    <div class="fg"><label class="fl">Email</label><input class="fi" id="login-email" type="email" placeholder="email@contoh.com"></div>
+                    <div class="fg"><label class="fl">Password</label><input class="fi" id="login-pass" type="password" placeholder="Minimal 6 karakter"></div>
+                    <button class="btn-full" id="btn-auth-login">Masuk</button>
+                </div>
+                <div id="auth-register-form" style="display:none">
+                    <div class="fg"><label class="fl">Username</label><input class="fi" id="reg-username" type="text" placeholder="Username"></div>
+                    <div class="fg"><label class="fl">Email</label><input class="fi" id="reg-email" type="email" placeholder="email@contoh.com"></div>
+                    <div class="fg"><label class="fl">Password</label><input class="fi" id="reg-pass" type="password" placeholder="Minimal 6 karakter"></div>
+                    <button class="btn-full" id="btn-auth-register">Daftar</button>
+                </div>
+                <div id="auth-status" style="text-align:center;margin-top:0.7rem;font-size:0.75rem"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUBSCRIPTION MODAL -->
+    <div class="modal-bg" id="subscription-modal" style="display:none">
+        <div class="modal-box wide">
+            <div class="modal-top">
+                <span class="modal-h">Langganan</span>
+                <button class="modal-x" id="sub-close">&times;</button>
+            </div>
+            <div class="modal-body" id="subscription-content"></div>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-bg" id="payment-modal" style="display:none">
+        <div class="modal-box" style="max-width:460px;max-height:90vh;overflow-y:auto">
+            <div class="modal-top">
+                <span class="modal-h">Pembayaran</span>
+                <button class="modal-x" id="pay-close">&times;</button>
+            </div>
+            <div class="modal-body" id="payment-content"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller@latest/lib/umd/bundle.min.js"></script>
+    <script src="subscription_client.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /* ── Particles ── */
+    (function(){
+        const c=document.getElementById('particles');
+        if(!c)return;
+        const ctx=c.getContext('2d');
+        let W,H;
+        const pts=[];
+        function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+        resize(); addEventListener('resize',resize);
+        class P{
+            constructor(){this.reset();}
+            reset(){
+                this.x=Math.random()*W; this.y=Math.random()*H;
+                this.r=Math.random()*1.2+0.2;
+                this.vx=(Math.random()-0.5)*0.25;
+                this.vy=(Math.random()-0.5)*0.25;
+                this.a=Math.random()*0.25+0.03;
+                this.hue=Math.random()>0.5?185:270;
+            }
+            update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
+            draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`hsla(${this.hue},100%,70%,${this.a})`;ctx.fill();}
+        }
+        for(let i=0;i<50;i++)pts.push(new P());
+        (function loop(){
+            ctx.clearRect(0,0,W,H);
+            pts.forEach(p=>{p.update();p.draw();});
+            for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+                const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+                if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,229,255,${0.03*(1-d/100)})`;ctx.lineWidth=0.4;ctx.stroke();}
+            }
+            requestAnimationFrame(loop);
+        })();
+    })();
+
+    /* ── Stagger Entrance ── */
+    (function(){
+        document.querySelectorAll('[data-stagger]').forEach((el,i)=>{
+            el.style.opacity='0';
+            el.style.transform='translateY(20px)';
+            setTimeout(()=>{
+                el.style.transition='opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
+                el.style.opacity='1'; el.style.transform='translateY(0)';
+            }, 80+i*70);
+        });
+    })();
+    </script>
+</body>
+</html>

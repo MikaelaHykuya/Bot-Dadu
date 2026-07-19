@@ -1,0 +1,20 @@
+[
+  {
+    "id": "4d29c0aa-387b-45dd-9f0e-c15f862c3592",
+    "userId": "ce35faae-b58d-4107-b626-4f60bd03a033",
+    "tier": "pro",
+    "amount": 79000,
+    "paymentMethod": "qris",
+    "status": "paid",
+    "createdAt": 1784446342711
+  },
+  {
+    "id": "1e2d7c0b-98af-483f-9e97-946da4daa711",
+    "userId": "0cbf90aa-a296-4f74-ad75-a368c618dd3a",
+    "tier": "enterprise",
+    "amount": 199000,
+    "paymentMethod": "qris",
+    "status": "paid",
+    "createdAt": 1784446537431
+  }
+]

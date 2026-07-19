@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ce35faae-b58d-4107-b626-4f60bd03a033",
+    "username": "test",
+    "email": "test@test.com",
+    "password": "$2b$10$8lBoi4XxBzHFz966PHkAY.MZy.9lAOSYVds/wNbdUVszv4sAuF7xO",
+    "tier": "pro",
+    "subscribedAt": 1784446342711,
+    "expiresAt": 1787038342711,
+    "createdAt": 1784446334177
+  },
+  {
+    "id": "0cbf90aa-a296-4f74-ad75-a368c618dd3a",
+    "username": "RaflyAlfazari",
+    "email": "raflyalfazari622@gmail.com",
+    "password": "$2b$10$1UyPUxOyEdNSkB0Du//fxOF2l6ZFGLnpGDXUp5cDX6SKXFXGqA9.y",
+    "tier": "enterprise",
+    "subscribedAt": 1784446537431,
+    "expiresAt": 1787038537431,
+    "createdAt": 1784446519616
+  },
+  {
+    "id": "07de80e6-1d78-4153-a61f-871d73220d7b",
+    "username": "Alice",
+    "email": "alicezubberg@gmail.com",
+    "password": "$2b$10$DPUCJAuaH6jp9fpFc5yZ8..pXfNjLBxo4rTR1hWA0z6boumvW/2di",
+    "tier": "free",
+    "subscribedAt": null,
+    "expiresAt": null,
+    "createdAt": 1784455692265
+  }
+]
