@@ -6,6 +6,10 @@ const path = require('path');
 const app = express();
 
 app.use(express.json({ limit: '1mb' }));
+app.use((req, res, next) => {
+      console.log("LOG_REQ:", req.method, req.url);
+      next();
+});
 
 // ── CORS ──
 app.use((req, res, next) => {
