@@ -1,6 +1,20 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/index" }
+  "builds": [
+    { "src": "api/index.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "landing.html", "use": "@vercel/static" },
+    { "src": "style.css", "use": "@vercel/static" },
+    { "src": "script.js", "use": "@vercel/static" },
+    { "src": "subscription_client.js", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.js" },
+    { "src": "/landing.html", "dest": "/landing.html" },
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/script.js", "dest": "/script.js" },
+    { "src": "/subscription_client.js", "dest": "/subscription_client.js" },
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
