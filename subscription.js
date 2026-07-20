@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { MongoClient } = require('mongodb');
 const uuidv4 = () => require('crypto').randomUUID();
 
 const router = express.Router();
@@ -15,7 +16,12 @@ async function getDB() {
     if (cachedDb) return cachedDb;
     if (!MONGO_URI) throw new Error('MONGODB_URI belum diset di environment variables');
     if (!cachedClient) {
-        cachedClient = new MongoClient(MONGO_URI, { serverSelectionTimeoutMS: 5000 });
+        cachedClient = new MongoClient(MONGO_URI, {
+            serverSelectionTimeoutMS: 5000,
+            tls: true,
+            tlsAllowInvalidCertificates: false,
+            tlsAllowInvalidHostnames: false
+        });
         await cachedClient.connect();
     }
     cachedDb = cachedClient.db('dadupro');

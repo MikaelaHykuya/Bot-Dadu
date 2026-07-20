@@ -353,7 +353,81 @@
             .stats { flex-wrap:wrap; }
             .stat { min-width:50%; border-bottom:1px solid var(--border); }
         }
+
+        /* ── Payment Method Items (subscription_client.js classes) ── */
+        .pay-methods { display:flex; flex-direction:column; gap:0.9rem; margin:1rem 0; }
+        .pay-method-group { display:flex; flex-direction:column; gap:0.35rem; }
+        .pay-method-group-title {
+            font-size:0.6rem; font-weight:700; letter-spacing:1.5px;
+            text-transform:uppercase; opacity:0.35; padding-left:0.2rem; margin-bottom:0.15rem;
+        }
+        .pay-method-item {
+            display:flex; align-items:center; gap:0.65rem;
+            padding:0.7rem 0.85rem; border-radius:12px;
+            border:1px solid var(--border); background:var(--glass);
+            cursor:pointer; transition:all 0.2s; width:100%; box-sizing:border-box;
+        }
+        .pay-method-item:hover { border-color:var(--border2); background:var(--glass2); }
+        .pay-method-item.selected { border-color:rgba(0,229,255,0.35); background:rgba(0,229,255,0.05); }
+        .pay-method-item input[type="radio"] { display:none; }
+        .pay-method-icon { font-size:1.35rem; flex-shrink:0; }
+        .pay-method-info { display:flex; flex-direction:column; gap:0.1rem; flex:1; }
+        .pay-method-name { font-size:0.8rem; font-weight:600; color:var(--white); }
+        .pay-method-desc { font-size:0.63rem; opacity:0.35; }
+        .pay-method-check { color:var(--cyan); font-weight:700; font-size:0.85rem; width:1rem; text-align:center; flex-shrink:0; }
+
+        /* ── Subscription Plan Cards ── */
+        .sub-current { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:0.9rem 1.1rem; margin-bottom:1rem; }
+        .sub-current-label { font-size:0.68rem; opacity:0.4; margin-bottom:0.25rem; }
+        .sub-current-tier { font-size:1.4rem; font-weight:800; letter-spacing:0.04em; }
+        .sub-current-expire { font-size:0.72rem; opacity:0.3; margin-top:0.2rem; }
+        .sub-plans { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:1rem; }
+        @media(max-width:400px){ .sub-plans { grid-template-columns:1fr; } }
+        .sub-plan { background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:0.85rem; display:flex; flex-direction:column; gap:0.35rem; }
+        .sub-plan.current { background:rgba(255,255,255,0.05); }
+        .sub-plan-name { font-weight:700; font-size:0.85rem; }
+        .sub-plan-price { font-size:1.15rem; font-weight:800; color:var(--white); }
+        .sub-plan-period { font-size:0.7rem; opacity:0.4; }
+        .sub-plan-durations { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.2rem 0; }
+        .sub-dur-opt { font-size:0.65rem; background:rgba(255,255,255,0.05); border-radius:6px; padding:0.18rem 0.4rem; cursor:pointer; opacity:0.55; transition:all 0.15s; }
+        .sub-dur-opt:hover { background:rgba(255,255,255,0.1); opacity:1; }
+        .sub-plan-features { list-style:none; padding:0; margin:0.3rem 0; display:flex; flex-direction:column; gap:0.25rem; flex:1; }
+        .sub-plan-features li { font-size:0.7rem; opacity:0.5; }
+        .sub-plan-features li::before { content:'✓ '; color:var(--green); opacity:1; }
+        .sub-plan-btn { border:none; border-radius:8px; font-weight:700; font-size:0.75rem; padding:0.5rem; cursor:pointer; margin-top:auto; transition:all 0.2s; font-family:'Plus Jakarta Sans',sans-serif; }
+        .sub-plan-btn.upgrade-btn { background:linear-gradient(135deg,var(--cyan),#00b4cc); color:#000; }
+        .sub-plan-btn.upgrade-btn:hover { opacity:0.85; transform:translateY(-1px); }
+        .sub-plan-btn.current-btn { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.4); cursor:default; }
+        .sub-actions { display:flex; gap:0.5rem; margin-top:0.4rem; }
+        .sub-logout-btn, .sub-cancel-btn { flex:1; padding:0.6rem; border-radius:10px; border:1px solid var(--border); background:transparent; color:var(--text); font-size:0.78rem; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Plus Jakarta Sans',sans-serif; }
+        .sub-logout-btn:hover { background:var(--glass2); color:var(--white); }
+        .sub-cancel-btn { border-color:rgba(255,77,106,0.25); color:rgba(255,100,100,0.7); }
+        .sub-cancel-btn:hover { background:rgba(255,50,50,0.07); }
+
+        /* ── Action Buttons ── */
+        .btn-import-go {
+            display:block; width:100%; padding:0.8rem; box-sizing:border-box;
+            background:linear-gradient(135deg,var(--cyan),#00b4cc); border:none;
+            border-radius:12px; color:#000; font-weight:800; font-size:0.9rem;
+            cursor:pointer; margin-top:0.5rem; transition:all 0.2s;
+            font-family:'Plus Jakarta Sans',sans-serif;
+        }
+        .btn-import-go:hover:not(:disabled) { opacity:0.88; transform:translateY(-1px); }
+        .btn-import-go:disabled { cursor:not-allowed; opacity:0.4; }
+        .btn-cancel-pay {
+            display:block; width:100%; padding:0.6rem; box-sizing:border-box;
+            background:transparent; border:1px solid var(--border); border-radius:10px;
+            color:var(--text); font-size:0.78rem; cursor:pointer; margin-top:0.4rem;
+            transition:all 0.2s; font-family:'Plus Jakarta Sans',sans-serif;
+        }
+        .btn-cancel-pay:hover { border-color:rgba(255,77,106,0.3); color:var(--red); }
+        .pay-actions { display:flex; flex-direction:column; gap:0.4rem; margin-top:0.7rem; }
+        .pay-success { text-align:center; padding:1.2rem 0; }
+        .pay-success-icon { font-size:2.8rem; margin-bottom:0.6rem; }
+        .pay-success h3 { font-size:1.2rem; font-weight:800; margin:0 0 0.4rem; }
+        .pay-success p { font-size:0.8rem; opacity:0.5; margin:0.2rem 0; }
     </style>
+
 </head>
 <body>
 
@@ -435,6 +509,54 @@
             <span style="font-size:0.78rem;font-weight:700;color:var(--white);font-family:'JetBrains Mono',monospace" id="demo-conf-pct">0%</span>
         </div>
         <div style="font-size:0.7rem;opacity:0.25;margin-top:0.6rem">8 sinyal aktif · 25 data</div>
+    </div>
+</section>
+
+<section class="section section-center">
+    <div class="section-label">Cara Pakai</div>
+    <h2 class="section-title">Cara Bermain</h2>
+    <p class="section-desc">Ikuti 3 langkah mudah untuk mulai menganalisis dadu dengan AI.</p>
+    <div class="why-list">
+        <div class="why-row">
+            <div class="why-emoji">1️⃣</div>
+            <div><h4>Lempar Dadu</h4><p>Tekan tombol <b>🎲 Lempar Dadu</b> di halaman app. 9 dadu akan dilempar secara acak dari sumber CSPRNG (kriptografi secure).</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">2️⃣</div>
+            <div><h4>Lihat Prediksi AI</h4><p>AI akan otomatis menganalisis pola dari 8 sinyal statistik: EWMA, Markov Chain, Autocorrelation, dan lainnya. Hasilnya berupa prediksi <b>KECIL (9-31)</b> atau <b>BESAR (32-54)</b> dengan persentase keyakinan.</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">3️⃣</div>
+            <div><h4>Catat Win/Lose</h4><p>Setelah hasil keluar, klik <b>✅ Win</b> jika prediksi benar atau <b>❌ Lose</b> jika salah. AI akan belajar dari setiap hasil untuk prediksi selanjutnya.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-center">
+    <div class="section-label">Panduan</div>
+    <h2 class="section-title">Cara Membaca Hasil</h2>
+    <p class="section-desc">Pahami setiap elemen di layar app supaya kamu bisa maksimal.</p>
+    <div class="why-list">
+        <div class="why-row">
+            <div class="why-emoji">🧠</div>
+            <div><h4>AI Prediction</h4><p>Menampilkan prediksi <b style="color:var(--cyan)">KECIL</b> (total dadu 9-31) atau <b style="color:var(--red)">BESAR</b> (total dadu 32-54). Semakin tinggi persentase keyakinan, semakin kuat sinyalnya.</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">📊</div>
+            <div><h4>Distribusi Peluang</h4><p>Menampilkan perbandingan teoritis vs empiris. Grafik vertikal dan horizontal menunjukkan kecenderungan hasil Kecil vs Besar dari data lemparanmu.</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">🏆</div>
+            <div><h4>Win / Lose / Streak</h4><p><b style="color:var(--green)">Win</b> = prediksi benar, <b style="color:var(--red)">Lose</b> = prediksi salah, <b style="color:var(--gold)">Streak</b> = jumlah win beruntun. Kamu bisa klik angka Win/Lose untuk mengedit manual.</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">⚡</div>
+            <div><h4>Mode Cepat & Auto</h4><p><b>Normal</b> = roll dengan animasi, <b>Cepat</b> = roll instan, <b>Auto</b> = roll otomatis setiap 3 detik. Cocok untuk mengumpulkan data cepat.</p></div>
+        </div>
+        <div class="why-row">
+            <div class="why-emoji">📋</div>
+            <div><h4>Paste & Add Roll Manual</h4><p><b>📋 Paste</b> = tempel angka dadu dari sumber lain (contoh: 4,5,6,3,2,1,5,4,3). <b>➕</b> = tambah roll manual dari Google Dice, masukkan total angka lalu pilih Win/Lose.</p></div>
+        </div>
     </div>
 </section>
 
@@ -563,7 +685,7 @@
     const LDUR={daily:'/hari',weekly:'/minggu',monthly:'/bulan'};
     let currentDur='daily';
     function switchDur(d){ currentDur=d; document.querySelectorAll('.dur-tab').forEach(t=>t.classList.remove('active')); document.querySelector(`[data-dur="${d}"]`).classList.add('active'); const bp=LPRICES.basic[d]; if(bp){document.getElementById('price-basic').textContent='Rp '+bp.toLocaleString('id-ID');document.getElementById('period-basic').textContent=LDUR[d];} const pp=LPRICES.pro[d]; if(pp){document.getElementById('price-pro').textContent='Rp '+pp.toLocaleString('id-ID');document.getElementById('period-pro').textContent=LDUR[d];} const ep=LPRICES.enterprise[d]||LPRICES.enterprise.monthly; document.getElementById('price-enterprise').textContent='Rp '+ep.toLocaleString('id-ID'); document.getElementById('period-enterprise').textContent=LDUR[d]||'/bulan'; }
-    function handlePlanClick(t){ if(t==='free'){window.location.href='index.html';return;} if(!currentUser){showAuthModal();return;} const p=PRICING.find(x=>x.id===t); if(!p)return; const pr=p.prices[currentDur]||p.prices.monthly||0; startPayment(t,pr,currentDur); }
+    function handlePlanClick(t){ if(t==='free'){window.location.href='index.html';return;} if(!currentUser){showAuthModal();return;} const userTier=getTier(); const tierOrder=['free','basic','pro','enterprise']; if(tierOrder.indexOf(userTier)>=tierOrder.indexOf(t)){window.location.href='index.html';return;} const p=PRICING.find(x=>x.id===t); if(!p)return; const validDur=p.prices[currentDur]?currentDur:(Object.keys(p.prices).find(k=>p.prices[k]>0)||'monthly'); const pr=p.prices[validDur]||0; startPayment(t,pr,validDur); }
     function showAuthModal(){document.getElementById('auth-modal').style.display='flex';}
     function hideAuthModal(){document.getElementById('auth-modal').style.display='none';}
     function setupLandingAuth(){const am=document.getElementById('auth-modal');if(am)am.addEventListener('click',e=>{if(e.target===am)hideAuthModal();});document.getElementById('auth-close')?.addEventListener('click',hideAuthModal);document.querySelectorAll('#auth-modal .modal-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('#auth-modal .modal-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');const tgt=tab.dataset.tab;document.getElementById('auth-login-form').style.display=tgt==='login'?'block':'none';document.getElementById('auth-register-form').style.display=tgt==='register'?'block':'none';});});document.getElementById('btn-auth-login')?.addEventListener('click',async()=>{const e=document.getElementById('login-email').value;const p=document.getElementById('login-pass').value;const s=document.getElementById('auth-status');try{s.textContent='Masuk...';await login(e,p);hideAuthModal();showToast('Selamat datang, '+currentUser.username+'!');updateLandingUI();}catch(err){s.innerHTML='<span style="color:var(--red)">'+err.message+'</span>';}});document.getElementById('btn-auth-register')?.addEventListener('click',async()=>{const u=document.getElementById('reg-username').value;const e=document.getElementById('reg-email').value;const p=document.getElementById('reg-pass').value;const s=document.getElementById('auth-status');try{s.textContent='Mendaftar...';await register(u,e,p);hideAuthModal();showToast('Akun dibuat! Selamat datang, '+currentUser.username+'!');updateLandingUI();}catch(err){s.innerHTML='<span style="color:var(--red)">'+err.message+'</span>';}});}

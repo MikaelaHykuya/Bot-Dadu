@@ -137,7 +137,7 @@ function checkExpiry() {
             localStorage.setItem(AUTH_KEY, JSON.stringify({ token: currentToken, user: currentUser }));
             showToast('⏰ Langganan ' + oldTier.toUpperCase() + ' telah berakhir. Kembali ke Free.');
             updateSubscriptionUI();
-            updateAll?.();
+            if (typeof updateAll === 'function') updateAll();
             if (typeof updateLandingUserUI === 'function') updateLandingUserUI();
         }
     }
@@ -365,7 +365,7 @@ function _renderPaymentModal() {
                 <p>Order #${orderId}</p>
                 <p style="margin:0.5rem 0;color:var(--white);font-weight:700">${plan.name} · ${DURATION_LABELS[duration]}</p>
                 <p style="opacity:0.5">Rp ${price.toLocaleString('id-ID')}</p>
-                <button class="btn-import-go" onclick="document.getElementById('payment-modal').style.display='none'; document.getElementById('subscription-modal').style.display='none';" style="margin-top:1.5rem">Mulai Gunakan</button>
+                <button class="btn-import-go" onclick="document.getElementById('payment-modal').style.display='none'; document.getElementById('subscription-modal').style.display='none'; window.location.href='index.html';" style="margin-top:1.5rem">Mulai Gunakan</button>
             </div>
         `;
     } else if (status === 'expired') {
@@ -493,7 +493,7 @@ async function _confirmAndActivate() {
         _renderPaymentModal();
         showToast('Berhasil subscribe! 🎉');
         updateSubscriptionUI();
-        updateAll?.();
+        if (typeof updateAll === 'function') updateAll();
     } catch (e) {
         showToast('Gagal: ' + e.message);
         _payState.status = 'select';
@@ -522,7 +522,7 @@ async function handleCancelSub() {
         hideSubscriptionModal();
         showToast('Langganan dibatalkan');
         updateSubscriptionUI();
-        updateAll?.();
+        if (typeof updateAll === 'function') updateAll();
     } catch (e) {
         showToast('Gagal: ' + e.message);
     }
@@ -569,7 +569,7 @@ function setupAuthHandlers() {
             hideAuthModal();
             showToast(`Selamat datang, ${currentUser.username}!`);
             updateSubscriptionUI();
-            updateAll?.();
+            if (typeof updateAll === 'function') updateAll();
         } catch (e) {
             status.innerHTML = `<span style="color:var(--red)">${e.message}</span>`;
         }
@@ -587,7 +587,7 @@ function setupAuthHandlers() {
             hideAuthModal();
             showToast(`Akun dibuat! Selamat datang, ${currentUser.username}!`);
             updateSubscriptionUI();
-            updateAll?.();
+            if (typeof updateAll === 'function') updateAll();
         } catch (e) {
             status.innerHTML = `<span style="color:var(--red)">${e.message}</span>`;
         }
