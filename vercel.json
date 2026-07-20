@@ -14,6 +14,7 @@
     { "src": "/style.css", "dest": "/style.css" },
     { "src": "/script.js", "dest": "/script.js" },
     { "src": "/subscription_client.js", "dest": "/subscription_client.js" },
+    { "src": "/index.html", "dest": "/index.html" },
     { "src": "/", "dest": "/landing.html" },
     { "src": "/(.*)", "dest": "/landing.html" }
   ]
